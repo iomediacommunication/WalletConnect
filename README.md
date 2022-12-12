@@ -6,6 +6,7 @@
 # install dependencies
 npm install
 npm install --save @walletconnect/auth-client
+npm install --save @walletconnect/web3-provider
 
 # serve with hot reload at localhost:3000
 npm run dev
