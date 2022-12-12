@@ -75,6 +75,12 @@
             >pages/index.vue</code
           >. Have fun!
         </p>
+        <button
+          class="bg-gray-100 text-sm p-1 rounded border"
+          @click="connexion"
+        >
+          Connect to wallet
+        </button>
       </div>
       <div class="flex justify-center pt-4 space-x-2">
         <a href="https://github.com/nuxt/nuxt.js" target="_blank"
@@ -117,7 +123,7 @@
 </template>
 
 <script>
-import AuthClient from "@walletconnect/auth-client";
+//import SignClient from "@walletconnect/sign-client";
 
 export default {
   name: "NuxtTutorial",
@@ -125,18 +131,21 @@ export default {
     console.log("Welcome to your WalletConnect");
   },
   methods: {
-    async connect() {
+    async connexion() {
+      console.log("connexion");
+    },
+    /*async connect() {
       // Connect WalletConnect
-      const authClient = await AuthClient.init({
+      const signClient = await SignClient.init({
         projectId: "793818e5a70d72693edaefff4c2de75f",
         metadata: {
-          name: "my-auth-dapp",
-          description: "A dapp using WalletConnect AuthClient",
-          url: "my-auth-dapp.com",
-          icons: ["https://my-auth-dapp.com/icons/logo.png"],
+          name: "Test Wallet",
+          description: "Test Wallet",
+          url: "#",
+          icons: ["https://walletconnect.com/walletconnect-logo.png"],
         },
       });
-    },
+    },*/
   },
 };
 </script>
