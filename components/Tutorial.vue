@@ -75,8 +75,12 @@
             >pages/index.vue</code
           >. Have fun!
         </p>
-        <button class="btn btn-primary m-3" @click="connexion">
+        <button class="btn btn-primary m-3" @click="connection">
           Connect to wallet
+        </button>
+
+        <button class="btn btn-error m-3" @click="disconnection">
+          Disconnect to wallet
         </button>
       </div>
       <div class="flex justify-center pt-4 space-x-2">
@@ -121,6 +125,7 @@
 
 <script>
 import WalletConnectProvider from "@walletconnect/web3-provider";
+import Web3 from "web3";
 
 export default {
   name: "NuxtTutorial",
@@ -168,18 +173,31 @@ export default {
     });
   },
   methods: {
-    async connexion() {
-      console.log("connexion...");
+    async connection() {
+      //  Create Web3 instance
+
+      console.log("connection...");
       await this.provider.enable();
 
       //  Create Web3 instance
       const web3 = new Web3(this.provider);
-      window.w3 = web3;
+      //window.w3 = web3;
+      //*2 const web3 = new this.$Web3(this.provider);
+      //window.w3 = web3;
 
-      var accounts = await web3.eth.getAccounts(); // get all connected accounts
-      account = accounts[0]; // get the primary account
+      //*2 var accounts = await this.$Web3.eth.getAccounts(); // get all connected accounts
+      //  Get Accounts
+      const accounts = await web3.eth.getAccounts();
+
+      const account = accounts[0]; // get the primary account
 
       console.log("Connected to " + account);
+    },
+
+    async disconnection() {
+      console.log("disconnection...");
+      await this.provider.disconnect();
+      console.log("Disconnected, good bye !");
     },
   },
 };
