@@ -75,11 +75,14 @@
             >pages/index.vue</code
           >. Have fun!
         </p>
-        <button class="btn btn-primary m-3" @click="connection">
+        <button
+          v-if="!account.length"
+          class="btn btn-primary m-3"
+          @click="connection"
+        >
           Connect to wallet
         </button>
-
-        <button class="btn btn-error m-3" @click="disconnection">
+        <button v-else class="btn btn-error m-3" @click="disconnection">
           Disconnect to wallet
         </button>
       </div>
@@ -133,10 +136,11 @@ export default {
     return {
       msg: "Welcome to your WalletConnect",
       provider: null,
+      account: "",
     };
   },
   created() {
-    console.log("Welcome to your WalletConnect");
+    console.log("Welcome to your WalletConnect ~");
 
     // instantiate WalletConnectProvider
     this.provider = new WalletConnectProvider({
@@ -175,29 +179,27 @@ export default {
   methods: {
     async connection() {
       //  Create Web3 instance
-
-      console.log("connection...");
+      console.log("Connection...");
       await this.provider.enable();
 
-      //  Create Web3 instance
-      const web3 = new Web3(this.provider);
-      //window.w3 = web3;
-      //*2 const web3 = new this.$Web3(this.provider);
-      //window.w3 = web3;
+      // get account with web3
+      this.account = await this.getAccount();
 
-      //*2 var accounts = await this.$Web3.eth.getAccounts(); // get all connected accounts
-      //  Get Accounts
-      const accounts = await web3.eth.getAccounts();
-
-      const account = accounts[0]; // get the primary account
-
-      console.log("Connected to " + account);
+      console.log("Connected to " + this.account);
     },
 
     async disconnection() {
       console.log("disconnection...");
       await this.provider.disconnect();
+      this.account = ""; // wipe account
       console.log("Disconnected, good bye !");
+    },
+
+    async getAccount() {
+      // get account with web3
+      const web3 = new Web3(this.provider);
+      const accounts = await web3.eth.getAccounts();
+      return accounts[0]; // get the primary account
     },
   },
 };
