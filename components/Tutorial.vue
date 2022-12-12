@@ -75,10 +75,7 @@
             >pages/index.vue</code
           >. Have fun!
         </p>
-        <button
-          class="bg-gray-100 text-sm p-1 rounded border"
-          @click="connexion"
-        >
+        <button class="btn btn-primary m-3" @click="connexion">
           Connect to wallet
         </button>
       </div>
@@ -123,29 +120,67 @@
 </template>
 
 <script>
-//import SignClient from "@walletconnect/sign-client";
+import WalletConnectProvider from "@walletconnect/web3-provider";
 
 export default {
   name: "NuxtTutorial",
+  data() {
+    return {
+      msg: "Welcome to your WalletConnect",
+      provider: null,
+    };
+  },
   created() {
     console.log("Welcome to your WalletConnect");
+
+    // instantiate WalletConnectProvider
+    this.provider = new WalletConnectProvider({
+      infuraId: "ab0f14e7c03645f08909ff851242a479",
+      qrcodeModalOptions: {
+        desktopLinks: [
+          "metmask",
+          "ledger",
+          "tokenary",
+          "wallet",
+          "wallet 3",
+          "secuX",
+          "ambire",
+          "wallet3",
+          "apolloX",
+          "zerion",
+          "sequence",
+          "punkWallet",
+          "kryptoGO",
+          "nft",
+          "riceWallet",
+          "vision",
+          "keyring",
+        ],
+        mobileLinks: [
+          "rainbow",
+          "metamask",
+          "argent",
+          "trust",
+          "imtoken",
+          "pillar",
+        ],
+      },
+    });
   },
   methods: {
     async connexion() {
-      console.log("connexion");
+      console.log("connexion...");
+      await this.provider.enable();
+
+      //  Create Web3 instance
+      const web3 = new Web3(this.provider);
+      window.w3 = web3;
+
+      var accounts = await web3.eth.getAccounts(); // get all connected accounts
+      account = accounts[0]; // get the primary account
+
+      console.log("Connected to " + account);
     },
-    /*async connect() {
-      // Connect WalletConnect
-      const signClient = await SignClient.init({
-        projectId: "793818e5a70d72693edaefff4c2de75f",
-        metadata: {
-          name: "Test Wallet",
-          description: "Test Wallet",
-          url: "#",
-          icons: ["https://walletconnect.com/walletconnect-logo.png"],
-        },
-      });
-    },*/
   },
 };
 </script>
