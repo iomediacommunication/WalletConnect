@@ -73,21 +73,12 @@
           <code class="p-1 text-sm bg-gray-100 border rounded">infura</code>
           project. Have fun !
         </p>
-        <button
-          v-if="!account.length"
-          class="m-3 btn btn-primary"
-          @click="connection"
-        >
-          Connect my wallet
-        </button>
-        <div v-else>
-          <p>
-            Hi <span class="italic">{{ account }} </span> 🖖🏻
-          </p>
-          <button class="m-3 btn btn-error" @click="disconnection">
-            Disconnect
-          </button>
-        </div>
+
+        <p>
+          Hi <span class="italic"> x000000 {{ account }} </span> 🖖🏻
+        </p>
+        <!-- Add wallet button -->
+        <WalletConnectorButton />
       </div>
       <div class="flex justify-center pt-4 space-x-2">
         <a href="https://github.com/MathieuBurnat/WalletConnect" target="_blank"
@@ -130,83 +121,21 @@
 </template>
 
 <script>
-import WalletConnectProvider from "@walletconnect/web3-provider";
-import Web3 from "web3";
+import WalletConnectorButton from "./WalletConnectorButton.vue";
+
 export default {
   name: "NuxtTutorial",
   data() {
     return {
       msg: "Welcome to your WalletConnect",
-      provider: null,
       account: "",
     };
   },
   created() {
     console.log("Welcome to your WalletConnect ~");
   },
-  methods: {
-    async connection() {
-      //  Create Web3 instance
-      console.log("Connection...");
-
-      try {
-        // instantiate WalletConnectProvider
-        this.provider = new WalletConnectProvider({
-          infuraId: process.env.INFURA_ID,
-          qrcodeModalOptions: {
-            desktopLinks: [
-              "metmask",
-              "ledger",
-              "tokenary",
-              "wallet",
-              "wallet 3",
-              "secuX",
-              "ambire",
-              "wallet3",
-              "apolloX",
-              "zerion",
-              "sequence",
-              "punkWallet",
-              "kryptoGO",
-              "nft",
-              "riceWallet",
-              "vision",
-              "keyring",
-            ],
-            mobileLinks: [
-              "rainbow",
-              "metamask",
-              "argent",
-              "trust",
-              "imtoken",
-              "pillar",
-            ],
-          },
-        });
-
-        await this.provider.enable();
-      } catch (error) {
-        console.log(error);
-      }
-
-      console.log("Get account...");
-      this.account = await this.getAccount();
-      console.log("Connected to " + this.account);
-    },
-
-    async disconnection() {
-      // Diconnec wallet and wipe local data
-      await this.provider.disconnect();
-      this.account = "";
-      console.log("Disconnected, good bye !");
-    },
-
-    async getAccount() {
-      // Get account with web3
-      const web3 = new Web3(this.provider);
-      const accounts = await web3.eth.getAccounts();
-      return accounts[0]; // get the primary account
-    },
+  components: {
+    WalletConnectorButton,
   },
 };
 </script>
