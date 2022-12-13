@@ -1,4 +1,4 @@
-# ariani-wallet
+# WalletConnect
 
 ## Build Setup
 
@@ -7,6 +7,7 @@
 npm install
 npm install --save @walletconnect/auth-client
 npm install --save @walletconnect/web3-provider
+npm install dotenv --save
 
 # serve with hot reload at localhost:3000
 npm run dev

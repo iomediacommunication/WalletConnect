@@ -71,7 +71,7 @@
           <code class="p-1 text-sm bg-gray-100 border rounded">metamask</code>
           wallet and setup an
           <code class="p-1 text-sm bg-gray-100 border rounded">infura</code>
-          project. Have fun!
+          project. Have fun !
         </p>
         <button
           v-if="!account.length"
@@ -107,7 +107,7 @@
               fill="currentColor"
             /></svg
         ></a>
-        <a href="https://twitter.com/nuxt_js" target="_blank"
+        <a href="https://twitter.com/iomedia_ch" target="_blank"
           ><svg
             class="w-6 h-6 text-gray-600 hover:text-gray-800"
             xmlns="http://www.w3.org/2000/svg"
@@ -132,7 +132,6 @@
 <script>
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import Web3 from "web3";
-
 export default {
   name: "NuxtTutorial",
   data() {
@@ -153,7 +152,7 @@ export default {
       try {
         // instantiate WalletConnectProvider
         this.provider = new WalletConnectProvider({
-          infuraId: "ab0f14e7c03645f08909ff851242a479",
+          infuraId: process.env.INFURA_ID,
           qrcodeModalOptions: {
             desktopLinks: [
               "metmask",
@@ -191,21 +190,19 @@ export default {
       }
 
       console.log("Get account...");
-      // get account with web3
       this.account = await this.getAccount();
-
       console.log("Connected to " + this.account);
     },
 
     async disconnection() {
-      console.log("disconnection...");
+      // Diconnec wallet and wipe local data
       await this.provider.disconnect();
-      this.account = ""; // wipe account
+      this.account = "";
       console.log("Disconnected, good bye !");
     },
 
     async getAccount() {
-      // get account with web3
+      // Get account with web3
       const web3 = new Web3(this.provider);
       const accounts = await web3.eth.getAccounts();
       return accounts[0]; // get the primary account
