@@ -144,47 +144,53 @@ export default {
   },
   created() {
     console.log("Welcome to your WalletConnect ~");
-
-    // instantiate WalletConnectProvider
-    this.provider = new WalletConnectProvider({
-      infuraId: "ab0f14e7c03645f08909ff851242a479",
-      qrcodeModalOptions: {
-        desktopLinks: [
-          "metmask",
-          "ledger",
-          "tokenary",
-          "wallet",
-          "wallet 3",
-          "secuX",
-          "ambire",
-          "wallet3",
-          "apolloX",
-          "zerion",
-          "sequence",
-          "punkWallet",
-          "kryptoGO",
-          "nft",
-          "riceWallet",
-          "vision",
-          "keyring",
-        ],
-        mobileLinks: [
-          "rainbow",
-          "metamask",
-          "argent",
-          "trust",
-          "imtoken",
-          "pillar",
-        ],
-      },
-    });
   },
   methods: {
     async connection() {
       //  Create Web3 instance
       console.log("Connection...");
-      await this.provider.enable();
 
+      try {
+        // instantiate WalletConnectProvider
+        this.provider = new WalletConnectProvider({
+          infuraId: "ab0f14e7c03645f08909ff851242a479",
+          qrcodeModalOptions: {
+            desktopLinks: [
+              "metmask",
+              "ledger",
+              "tokenary",
+              "wallet",
+              "wallet 3",
+              "secuX",
+              "ambire",
+              "wallet3",
+              "apolloX",
+              "zerion",
+              "sequence",
+              "punkWallet",
+              "kryptoGO",
+              "nft",
+              "riceWallet",
+              "vision",
+              "keyring",
+            ],
+            mobileLinks: [
+              "rainbow",
+              "metamask",
+              "argent",
+              "trust",
+              "imtoken",
+              "pillar",
+            ],
+          },
+        });
+
+        await this.provider.enable();
+      } catch (error) {
+        console.log(error);
+      }
+
+      console.log("Get account...");
       // get account with web3
       this.account = await this.getAccount();
 
