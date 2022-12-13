@@ -1,7 +1,7 @@
 <!-- Please remove this file from your project -->
 <template>
   <div
-    class="relative flex items-top justify-center min-h-screen bg-gray-100 sm:items-center sm:pt-0"
+    class="relative flex justify-center min-h-screen bg-gray-100 items-top sm:items-center sm:pt-0"
   >
     <link
       href="https://cdn.jsdelivr.net/npm/tailwindcss@2.1.2/dist/tailwind.min.css"
@@ -50,8 +50,8 @@
           />
         </svg>
       </a>
-      <div class="mt-8 bg-white overflow-hidden shadow sm:rounded-lg p-6">
-        <h2 class="text-2xl leading-7 font-semibold">
+      <div class="p-6 mt-8 overflow-hidden bg-white shadow sm:rounded-lg">
+        <h2 class="text-2xl font-semibold leading-7">
           Welcome to your WalletConnect
         </h2>
         <p class="mt-3 text-gray-600">
@@ -59,35 +59,38 @@
           <a
             href="https://docs.walletconnect.com/2.0/web3modal/about"
             target="_blank"
-            class="button--doc text-green-500 hover:underline"
+            class="text-green-500 button--doc hover:underline"
             >WalletConnect Documentation</a
           >, whether you are new or have previous experience with the
           framework.<br />
         </p>
-        <p class="mt-4 pt-4 text-gray-800 border-t border-dashed"></p>
+        <p class="pt-4 mt-4 text-gray-800 border-t border-dashed"></p>
+        <h2 class="text-2xl font-semibold leading-7">Wallet options</h2>
         <p>
-          To get started, remove
-          <code class="bg-gray-100 text-sm p-1 rounded border"
-            >components/Tutorial.vue</code
-          >
-          and start coding in
-          <code class="bg-gray-100 text-sm p-1 rounded border"
-            >pages/index.vue</code
-          >. Have fun!
+          To get started, you can create a
+          <code class="p-1 text-sm bg-gray-100 border rounded">metamask</code>
+          wallet and setup an
+          <code class="p-1 text-sm bg-gray-100 border rounded">infura</code>
+          project. Have fun!
         </p>
         <button
           v-if="!account.length"
-          class="btn btn-primary m-3"
+          class="m-3 btn btn-primary"
           @click="connection"
         >
-          Connect to wallet
+          Connect my wallet
         </button>
-        <button v-else class="btn btn-error m-3" @click="disconnection">
-          Disconnect to wallet
-        </button>
+        <div v-else>
+          <p>
+            Hi <span class="italic">{{ account }} </span> 🖖🏻
+          </p>
+          <button class="m-3 btn btn-error" @click="disconnection">
+            Disconnect
+          </button>
+        </div>
       </div>
       <div class="flex justify-center pt-4 space-x-2">
-        <a href="https://github.com/nuxt/nuxt.js" target="_blank"
+        <a href="https://github.com/MathieuBurnat/WalletConnect" target="_blank"
           ><svg
             class="w-6 h-6 text-gray-600 hover:text-gray-800 button--github"
             xmlns="http://www.w3.org/2000/svg"
