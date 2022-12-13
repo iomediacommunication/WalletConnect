@@ -74,11 +74,13 @@
           project. Have fun !
         </p>
 
-        <p>
-          Hi <span class="italic"> x000000 {{ account }} </span> 🖖🏻
+        <p v-if="account.length">
+          Hi
+          <span class="italic"> {{ account }} </span>
+          🖖🏻
         </p>
         <!-- Add wallet button -->
-        <WalletConnectorButton />
+        <WalletConnectorButton @getAccountValue="(v) => (account = v)" />
       </div>
       <div class="flex justify-center pt-4 space-x-2">
         <a href="https://github.com/MathieuBurnat/WalletConnect" target="_blank"
@@ -130,9 +132,6 @@ export default {
       msg: "Welcome to your WalletConnect",
       account: "",
     };
-  },
-  created() {
-    console.log("Welcome to your WalletConnect ~");
   },
   components: {
     WalletConnectorButton,

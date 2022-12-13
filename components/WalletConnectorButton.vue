@@ -26,7 +26,6 @@ export default {
   },
   created() {
     console.log("Welcome to your WalletConnect ~");
-    console.log("account value :" + this.account);
   },
   methods: {
     async connection() {
@@ -82,6 +81,8 @@ export default {
       // Diconnec wallet and wipe local data
       await this.provider.disconnect();
       this.account = "";
+      this.$emit("getAccountValue", "");
+
       console.log("Disconnected, good bye !");
     },
 
@@ -89,7 +90,9 @@ export default {
       // Get account with web3
       const web3 = new Web3(this.provider);
       const accounts = await web3.eth.getAccounts();
-      return accounts[0]; // get the primary account
+      this.$emit("getAccountValue", accounts[0]);
+
+      return accounts[0];
     },
   },
 };
