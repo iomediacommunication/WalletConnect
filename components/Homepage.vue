@@ -74,11 +74,13 @@
           project. Have fun !
         </p>
 
+        <!-- Wallet account (from the child variable account) -->
         <p v-if="account.length">
           Hi
           <span class="italic"> {{ account }} </span>
           🖖🏻
         </p>
+
         <!-- Add wallet button -->
         <WalletConnectorButton @getAccountValue="(v) => (account = v)" />
       </div>

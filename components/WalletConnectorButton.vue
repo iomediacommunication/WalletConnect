@@ -73,26 +73,22 @@ export default {
       }
 
       console.log("Get account...");
-      this.account = await this.getAccount();
-      console.log("Connected to " + this.account);
+      // Get account with web3
+      const web3 = new Web3(this.provider);
+      const a = await web3.eth.getAccounts();
+      this.setAccount(a[0]);
     },
 
     async disconnection() {
       // Diconnec wallet and wipe local data
       await this.provider.disconnect();
-      this.account = "";
-      this.$emit("getAccountValue", "");
-
+      this.setAccount("");
       console.log("Disconnected, good bye !");
     },
 
-    async getAccount() {
-      // Get account with web3
-      const web3 = new Web3(this.provider);
-      const accounts = await web3.eth.getAccounts();
-      this.$emit("getAccountValue", accounts[0]);
-
-      return accounts[0];
+    async setAccount(account) {
+      this.$emit("getAccountValue", account);
+      this.account = account;
     },
   },
 };
